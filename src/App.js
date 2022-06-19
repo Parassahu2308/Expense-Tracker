@@ -1,10 +1,26 @@
-import React from "react";
+import styled from  "styled-components";
+import HomeComponent from "./module/home"
 
-function App() {
+const Container = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin: 30px 0 10px ;
+  font-family:Montserrat;
+`;
+
+const Header = styled.span`
+  color:black;
+  font-size:25px;
+  font-weight:bold;
+`
+
+const App =() => {
   return(
-    <>
-        <h1>Hello, Wellcome</h1>
-    </>
+    <Container>
+        <Header>Expense Tracker</Header>
+        <HomeComponent/>
+    </Container>
   );
 };
 
