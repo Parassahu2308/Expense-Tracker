@@ -43,7 +43,7 @@ const TransactionCell = (props) => {
   );
 };
 const TransactionComponent = (props) => {
-  const [searchText, updateSearchText] = useState(props.transactions);
+  const [searchText, updateSearchText] = useState("");
   const [filteredTransaction, updateTxn] = useState(props.transactions);
   const filterData = (searchText) => {
     if (!searchText || !searchText.trim().length) {
@@ -52,7 +52,7 @@ const TransactionComponent = (props) => {
     }
     let txn = [...props.transactions];
     txn = txn.filter((payload) =>
-      payload.desc.toLowerCase().includes(searchText.toLowerCase().trim())
+      payload.des.toLowerCase().includes(searchText.toLowerCase().trim())
     );
     updateTxn(txn);
   };

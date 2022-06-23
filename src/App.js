@@ -1,5 +1,5 @@
 import styled from  "styled-components";
-import HomeComponent from "./module/home"
+import HomeComponent from "./module/home";
 
 const Container = styled.div`
   display:flex;
