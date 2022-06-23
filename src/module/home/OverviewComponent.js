@@ -1,12 +1,12 @@
 import { useState } from "react";
-import styled from  "styled-components";
+import styled from "styled-components";
 
 const Container = styled.div`
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px ;
+  margin: 10px;
   font-family: Montserrat;
   font-weight: bold;
 `;
@@ -36,8 +36,8 @@ const AddTransactionContainer = styled.div`
   gap: 10px;
   width: 100%;
   padding: 15px 20px;
-  margin: 10px 20px;
-  & input{
+  margin: 20px;
+  & input {
     outline: none;
     padding: 10px 12px;
     border-radius: 4px;
@@ -49,42 +49,80 @@ const RadioBox = styled.div`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  &input{
+  &input {
     width: unset;
-    margin: 0 10px
+    margin: 0 10px;
   }
 `;
 
-const AddTransactionView = (props) =>{
-    return(
-      <AddTransactionContainer>
-          <input placeholder="Amount"/>
-          <input placeholder="Description"/>
-          <RadioBox>
-              <input type="radio" id="expense" name="type" value="EXPENSE"/>
-              <label htmlFor="expense" >Expense</label>
-              <input type="radio" id="description" name="type" value="INCOME"/>
-              <label htmlFor="income" >Income</label>
-          </RadioBox>
-          <AddTransaction>Add Transaction</AddTransaction>
-      </AddTransactionContainer>
-    );
+const AddTransactionView = (props) => {
+  const [amount, setAmount] = useState();
+  const [des, setDes] = useState();
+  const [type, setType] = useState("EXPENSE");
+
+  const addTransaction = () => {
+    props.addTransaction({ amount: Number(amount), des, type, id: Date.now() });
+    props.toogleAddtxn();
+  };
+
+  return (
+    <AddTransactionContainer>
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Description"
+        value={des}
+        onChange={(e) => setDes(e.target.value)}
+      />
+      <RadioBox>
+        <input
+          type="radio"
+          id="expense"
+          name="type"
+          value="EXPENSE"
+          checked={type === "EXPENSE"}
+          onChange={(e) => setType(e.target.value)}
+        />
+        <label htmlFor="expense">Expense</label>
+        <input
+          type="radio"
+          id="description"
+          name="type"
+          value="INCOME"
+          checked={type === "INCOME"}
+          onChange={(e) => setType(e.target.value)}
+        />
+        <label htmlFor="income">Income</label>
+      </RadioBox>
+      <AddTransaction onClick={addTransaction}>Add Transaction</AddTransaction>
+    </AddTransactionContainer>
+  );
 };
 
-const OverviewComponent = (props) =>{
+const OverviewComponent = (props) => {
+  const [isAddTxnVisible, toogleAddtxn] = useState(false);
 
-    const [isAddTxnVisible, toogleAddtxn] = useState(false);
-
-      return(
-        <Container>
-            <BalanceBox>
-                Balance: Rs.10000
-                <AddTransaction onClick={()=>toogleAddtxn(!isAddTxnVisible)}>
-                  {isAddTxnVisible ? "Cancel" : "ADD"}</AddTransaction>
-            </BalanceBox>
-            {isAddTxnVisible && <AddTransactionView/>}
-        </Container>
-      );
+  return (
+    <Container>
+      <BalanceBox>
+        Balance: Rs.10000
+        <AddTransaction onClick={() => toogleAddtxn(!isAddTxnVisible)}>
+          {isAddTxnVisible ? "Cancel" : "ADD"}
+        </AddTransaction>
+      </BalanceBox>
+      {isAddTxnVisible && (
+        <AddTransactionView
+          toogleAddtxn={toogleAddtxn}
+          addTransaction={props.addTransaction}
+        />
+      )}
+    </Container>
+  );
 };
 
 export default OverviewComponent;
