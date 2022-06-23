@@ -54,6 +54,26 @@ const RadioBox = styled.div`
     margin: 0 10px;
   }
 `;
+const ExpenseContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin: 20px;
+`;
+const ExpenseBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e6e8e9;
+  border-radius: 4px;
+  padding: 15px 20px;
+  width: 135px;
+  font-size: 14px;
+  & span{
+    font-weight: bold;
+    font-size: 20px;
+    color: ${(props => props.isIncome?'green':'red')};
+  }
+`;
 
 const AddTransactionView = (props) => {
   const [amount, setAmount] = useState();
@@ -110,7 +130,7 @@ const OverviewComponent = (props) => {
   return (
     <Container>
       <BalanceBox>
-        Balance: Rs.10000
+        Balance: Rs.{props.income - props.expense}
         <AddTransaction onClick={() => toogleAddtxn(!isAddTxnVisible)}>
           {isAddTxnVisible ? "Cancel" : "ADD"}
         </AddTransaction>
@@ -121,6 +141,14 @@ const OverviewComponent = (props) => {
           addTransaction={props.addTransaction}
         />
       )}
+      <ExpenseContainer>
+        <ExpenseBox isIncome={false}>
+          Expense<span>Rs.{props.expense}</span>
+        </ExpenseBox>
+        <ExpenseBox isIncome={true}>
+          Income<span>Rs.{props.income}</span>
+        </ExpenseBox>
+      </ExpenseContainer>
     </Container>
   );
 };

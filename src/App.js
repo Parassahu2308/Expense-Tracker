@@ -13,7 +13,7 @@ const Header = styled.span`
   color:black;
   font-size:25px;
   font-weight:bold;
-`
+`;
 
 const App =() => {
   return(
